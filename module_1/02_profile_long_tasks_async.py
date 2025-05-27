@@ -55,6 +55,6 @@ if __name__ == "__main__":
 # Task 4 completed.
 # Asynchronous function completed in 2.00 seconds
 
-# Due to the nature of asyncio, the tasks are run concurrently,
+# Due to the nature of asyncio, the tasks run concurrently,
 # and the total time taken is approximately equal to the time taken by the longest task.
 # In this case, since all tasks take 2 seconds, the total time is 2 seconds.

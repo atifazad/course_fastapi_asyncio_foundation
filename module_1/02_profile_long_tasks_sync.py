@@ -49,5 +49,5 @@ if __name__ == "__main__":
 # Task 4 completed.
 # Sync function completed in 8.00 seconds
 
-# In this case, the tasks are run sequentially (one after the other),
+# In this case, the tasks run sequentially (one after the other),
 # and the total time taken is the sum of the time taken by each task.

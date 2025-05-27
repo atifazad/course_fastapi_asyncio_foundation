@@ -46,7 +46,7 @@ if __name__ == "__main__":
     start_time = time.perf_counter()
     # debug=True is used to enable debug mode in asyncio
     # This helps in identifying issues with the event loop
-    asyncio.run(main())
+    asyncio.run(main(), debug=True)
     end_time = time.perf_counter()
     print(f"Async function completed in {end_time - start_time:.2f} seconds")
 
@@ -59,3 +59,12 @@ if __name__ == "__main__":
 # Task 2 completed.
 # Task 3 completed.
 # Async function completed in 7.01 seconds
+
+# Had we not used the blocking_task, the output would have been:
+# Task 1 started.
+# Task 2 started.
+# Task 3 started.
+# Task 1 completed.
+# Task 2 completed.
+# Task 3 completed.
+# Async function completed in 5.00 seconds
