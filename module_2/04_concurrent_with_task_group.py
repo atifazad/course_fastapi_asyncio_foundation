@@ -18,6 +18,9 @@ async def coro_2():
     await asyncio.sleep(1)
     print("Coro 2 completed.")
 
+    # Simulating an error
+    # raise ValueError("An error occurred in coro_2")
+
     return "Coro 2 result"
 
 
