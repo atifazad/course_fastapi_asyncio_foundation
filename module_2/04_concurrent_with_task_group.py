@@ -37,10 +37,14 @@ async def main():
 
     start_time = time.perf_counter()
     tasks = []
-    async with asyncio.TaskGroup() as tg:
-        tasks.append(tg.create_task(coro_1()))
-        tasks.append(tg.create_task(coro_2()))
-        tasks.append(tg.create_task(coro_3()))
+    try:
+        async with asyncio.TaskGroup() as tg:
+            tasks.append(tg.create_task(coro_1()))
+            tasks.append(tg.create_task(coro_2()))
+            tasks.append(tg.create_task(coro_3()))
+    except* ValueError as e:
+        print(f"An error occurred: {e}")
+
     end_time = time.perf_counter()
 
     for task in tasks:
