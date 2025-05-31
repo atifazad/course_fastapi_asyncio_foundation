@@ -25,7 +25,7 @@ async def validate(data):
     await asyncio.sleep(.2)
     print("validate completed.")
 
-    return data     # validated_data
+    return data     # return the validated_data
 
 
 async def save_in_db(validated_data):
