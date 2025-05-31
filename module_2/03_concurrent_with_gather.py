@@ -35,18 +35,19 @@ async def main():
     print(f"Running tasks concurrently, with asyncio.gather...")
     start_time = time.perf_counter()
 
+    # Run web scraping tasks concurrently.
     task_1 = asyncio.create_task(scrape_data_from_website_1())
     task_2 = asyncio.create_task(scrape_data_from_website_2())
     task_3 = asyncio.create_task(scrape_data_from_website_3())
 
+    # await the tasks to complete and collect the results.
     r1, r2, r3 = await asyncio.gather(task_1, task_2, task_3)
 
     print("\nResults:")
     print(f"{r1}\n{r2}\n{r3}")
 
     end_time = time.perf_counter()
-    print(
-        f"Total time: {end_time - start_time:.2f} seconds")
+    print(f"Total time: {end_time - start_time:.2f} seconds")
 
 if __name__ == "__main__":
     asyncio.run(main())

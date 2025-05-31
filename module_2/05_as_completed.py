@@ -37,12 +37,15 @@ async def main():
 
     start_time = time.perf_counter()
 
+    # Run web scraping tasks concurrently.
     tasks = [
         asyncio.create_task(scrape_data_from_website_1()),
         asyncio.create_task(scrape_data_from_website_2()),
         asyncio.create_task(scrape_data_from_website_3()),
     ]
 
+    # wait for each task to complete
+    # then await to collect the results.
     print("\nResults:")
     for completed_task in asyncio.as_completed(tasks):
         result = await completed_task

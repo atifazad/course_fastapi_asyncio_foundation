@@ -38,6 +38,7 @@ async def main():
     print("Running tasks concurrently with TaskGroup:")
 
     start_time = time.perf_counter()
+    # Run web scraping tasks concurrently as a batch with TaskGroup.
     tasks = []
     try:
         async with asyncio.TaskGroup() as tg:
@@ -47,6 +48,7 @@ async def main():
     except* ValueError as e:
         print(f"An error occurred: {e}")
 
+    # await tasks to collect the results.
     print("\nResults:")
     for task in tasks:
         result = await task
