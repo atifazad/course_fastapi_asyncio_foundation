@@ -1,66 +1,68 @@
-# This script demonstrates how to run multiple asynchronous tasks sequentially using `asyncio.gether`.
+# Consider that we have to scrape data from three websites.
+# Data from three websites can be scraped independent of each other.
+# This is a perfect scenario for concurrent tasks.
+
 
 import asyncio
 import time
 
 
-async def coro_1():
-    print("Coro 1 started.")
-    await asyncio.sleep(5)
-    print("Coro 1 completed.")
+async def scrape_data_from_website_1():
+    print(f"Starting to scrape website 1")
+    await asyncio.sleep(.9)
+    print(f"Done scraping website 1")
 
-    return "Coro 1 result"
-
-
-async def coro_2():
-    print("Coro 2 started.")
-    await asyncio.sleep(1)
-    print("Coro 2 completed.")
-
-    return "Coro 2 result"
+    return "website_1_data"
 
 
-async def coro_3():
-    print("Coro 3 started.")
-    await asyncio.sleep(3)
-    print("Coro 3 completed.")
+async def scrape_data_from_website_2():
+    print(f"Starting to scrape website 2")
+    await asyncio.sleep(.5)
+    print(f"Done scraping website 2")
 
-    return "Coro 3 result"
+    return "website_2_data"
+
+
+async def scrape_data_from_website_3():
+    print(f"Starting to scrape website 3")
+    await asyncio.sleep(.6)
+    print(f"Done scraping website 3")
+
+    return "website_3_data"
 
 
 async def main():
-    print("Running tasks concurrently with gather:")
-
+    print(f"Running tasks concurrently, with asyncio.gather...")
     start_time = time.perf_counter()
-    task_1 = asyncio.create_task(coro_1())
-    task_2 = asyncio.create_task(coro_2())
-    task_3 = asyncio.create_task(coro_3())
-    r1, r2, r3 = await asyncio.gather(
-        task_1, task_2, task_3
-    )
+
+    task_1 = asyncio.create_task(scrape_data_from_website_1())
+    task_2 = asyncio.create_task(scrape_data_from_website_2())
+    task_3 = asyncio.create_task(scrape_data_from_website_3())
+
+    r1, r2, r3 = await asyncio.gather(task_1, task_2, task_3)
+
+    print("\nResults:")
+    print(f"{r1}\n{r2}\n{r3}")
+
     end_time = time.perf_counter()
-
-    print(f"Results: \n {r1}\n {r2}\n {r3}")
-    print(f"All tasks completed in {end_time - start_time:.2f} seconds")
-
+    print(
+        f"Total time: {end_time - start_time:.2f} seconds")
 
 if __name__ == "__main__":
     asyncio.run(main())
 
 
 # OUTPUT:
-# Running tasks concurrently with gather:
-# Coro 1 started.
-# Coro 2 started.
-# Coro 3 started.
-# Coro 2 completed.
-# Coro 3 completed.
-# Coro 1 completed.
-# Results:
-#  Coro 1 result
-#  Coro 2 result
-#  Coro 3 result
-# All tasks completed in 5.00 seconds
+# Running tasks concurrently, with asyncio.gather...
+# Starting to scrape website 1
+# Starting to scrape website 2
+# Starting to scrape website 3
+# Done scraping website 2
+# Done scraping website 3
+# Done scraping website 1
 
-# The total execution time is determined by the longest task (coro_1),
-# which runs concurrently with the other tasks.
+# Results:
+# website_1_data
+# website_2_data
+# website_3_data
+# Total time: 0.90 seconds
