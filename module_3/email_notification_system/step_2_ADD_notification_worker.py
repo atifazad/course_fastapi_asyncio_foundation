@@ -44,22 +44,22 @@ async def application_service():
             f"[ApplicationService] Application status changed for {update["user"]}")
 
 
-def format_notification(event):
-    if event["type"] == "job_posted":
+def format_notification(message):
+    if message["type"] == "job_posted":
         return {
-            "to": event["user"],
+            "to": message["user"],
             "subject": "New Job Posted",
             "body": "A new job matching your interests was posted."
         }
-    elif event["type"] == "recruiter_message":
+    elif message["type"] == "recruiter_message":
         return {
-            "to": event["user"],
+            "to": message["user"],
             "subject": "You have a new message from a recruiter",
             "body": "A recruiter has contacted you regarding a new opportunity."
         }
-    elif event["type"] == "application_status_change":
+    elif message["type"] == "application_status_change":
         return {
-            "to": event["user"],
+            "to": message["user"],
             "subject": "Application Status Updated",
             "body": "Your job application status has been updated."
         }
@@ -76,8 +76,8 @@ async def send_email(notification, worker_id):
 
 async def notification_worker(worker_id):
     while True:
-        event = await notification_queue.get()
-        notification = format_notification(event)
+        message = await notification_queue.get()
+        notification = format_notification(message)
         if notification:
             await send_email(notification, worker_id)
         notification_queue.task_done()
