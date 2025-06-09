@@ -3,7 +3,6 @@ import random
 
 
 notification_queue = asyncio.Queue()        # A shared queue
-email_semaphore = asyncio.Semaphore(5)      # Limit to 5 concurrent email sends
 email_stats_lock = asyncio.Lock()           # Lock for email_stats
 email_sent_count = {}                       # Shared counter for email_stats
 
@@ -89,9 +88,8 @@ async def notification_worker(worker_id):
         event = await notification_queue.get()
         notification = format_notification(event)
         if notification:
-            async with email_semaphore:
-                await send_email(notification, worker_id)
-                await update_email_stats(notification['to'])
+            await send_email(notification, worker_id)
+            await update_email_stats(notification['to'])
         notification_queue.task_done()
 
 
