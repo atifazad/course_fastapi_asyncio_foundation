@@ -17,7 +17,7 @@ async def producer():
 async def consumer():
     try:
         while True:
-            item: str = await queue.get()
+            item = await queue.get()
             print(f"Consumer: consumed {item}")
             queue.task_done()
     except asyncio.CancelledError:

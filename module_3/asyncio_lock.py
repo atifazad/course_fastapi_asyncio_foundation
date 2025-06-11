@@ -2,8 +2,8 @@ import asyncio
 
 
 # Shared counters
-unsafe_counter: int = 0
-safe_counter: int = 0
+unsafe_counter = 0
+safe_counter = 0
 
 
 async def unsafe_increment(task_id):
